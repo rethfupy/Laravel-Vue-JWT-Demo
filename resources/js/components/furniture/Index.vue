@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import API from "../../api";
 
 export default {
     name: "Index",
@@ -32,7 +32,8 @@ export default {
     },
     methods: {
         getFurniture() {
-            axios.get("/api/furniture").then((res) => {
+            API.get("/api/auth/furniture").then((res) => {
+                console.log(res);
                 this.furniture = res.data.data;
             });
         },
