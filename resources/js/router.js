@@ -24,6 +24,11 @@ const routes = [
         name: "user.registration",
         meta: { guestOnly: true },
     },
+    {
+        path: "/:pathMatch(.*)*",
+        component: () => import("./components/main/Index.vue"),
+        name: "404",
+    },
 ];
 
 const router = createRouter({

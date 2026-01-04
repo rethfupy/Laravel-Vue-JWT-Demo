@@ -33,7 +33,6 @@ export default {
     methods: {
         getFurniture() {
             API.get("/api/auth/furniture").then((res) => {
-                console.log(res);
                 this.furniture = res.data.data;
             });
         },
