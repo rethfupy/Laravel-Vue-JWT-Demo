@@ -1,6 +1,11 @@
 <template>
     <div class="d-flex flex-column gap-2 w-25">
         <h1>Registration</h1>
+        <template v-for="type in errors">
+            <template v-for="error in type">
+                <p class="text-danger mb-0">{{ error }}</p>
+            </template>
+        </template>
         <p :class="this.error ? 'text-danger mb-0' : 'd-none'">
             {{ this.error }}
         </p>
@@ -52,22 +57,11 @@ export default {
             email: "",
             password: "",
             password_confirmation: "",
-            error: "",
+            errors: null,
         };
     },
     methods: {
         store() {
-            this.error = "";
-            if (!this.name.match(/^[a-zA-Z ]{2,30}$/)) {
-                this.error =
-                    "Please use English letters only (2-30 characters).";
-                return;
-            }
-
-            if (this.password !== this.password_confirmation) {
-                this.error = "Passwords do not match.";
-                return;
-            }
             axios
                 .post("/api/user", {
                     name: this.name,
@@ -80,7 +74,8 @@ export default {
                     this.$router.push({ name: "main.index" });
                 })
                 .catch((error) => {
-                    this.error = error.response.data.message;
+                    console.log(error);
+                    this.errors = error.response.data.errors;
                 });
         },
     },
